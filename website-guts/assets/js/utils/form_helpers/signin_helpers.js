@@ -31,7 +31,20 @@ var signinHelper = {
     w.optly.mrkt.setAttributeCookie(resp);
     w.optly.identifyVisitorAttributes();
 
+    var snippetInstalled = false;
     if (resp && !pricingPath) {
+      if(type resp.has_installed_snippet === 'string'){
+        if(resp.has_installed_sippet === true){
+          snippetInstalled = true;
+        } else {
+          snippetInstalled = false;
+        }
+      } else {
+        snippetInstalled = false;
+      }
+      w.analytics.identify({
+        'Snippet installed': snippetInstalled 
+      });
       this.redirectHelper({
         redirectPath: w.apiDomain + '/dashboard',
         bodyClass: 'signed-in',
